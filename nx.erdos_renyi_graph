@@ -1,0 +1,13 @@
+%matplotlib inline
+
+import sys
+
+import matplotlib.pyplot as plt
+from networkx import nx
+
+ba = nx.erdos_renyi_graph(4, 5)
+
+
+plt.figure(1,figsize=(5,5)) 
+nx.draw(ba,node_size=60)
+plt.show()
