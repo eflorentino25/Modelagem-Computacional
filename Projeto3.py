@@ -19,9 +19,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from random import *
 
-n=500 # number of nodes
+n=500 # number of nodes, multiple of ten
 
-Tmax=1500# number of iterations, multiple of ten
+Tmax=1500# number of iterations
 dt=0.18 #time increment
 
 k0=0 # sample number 0
