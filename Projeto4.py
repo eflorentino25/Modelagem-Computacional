@@ -1,6 +1,4 @@
 ###Projeto 4
-
-
 #import time
 import networkx as nx
 #import numpy as np
@@ -13,23 +11,27 @@ import os
 #Declaração de variáveis.
 Test = 0 
 
+#G = nx.Graph()
 
 
 
-G = nx.Graph()
+#R = input("Deseja gerar o grafo a partir de um arquivo? (S/N)")
 
 
+#if( R == 'S'): 
+##Adicionando os nós ao Grafo a partir do arquivo do professor.
+#    os.chdir('D:\\UNIFESP\\ModComp\\RedeModularizada')
+#    
+#    arestas_txt = open('network.dat','r')
+#    
+#    for line in arestas_txt:
+#        linhacomp = line.split()
+#        primeiro = linhacomp[0]
+#        segundo  = linhacomp[1]
+#        G.add_edge(primeiro, segundo)
 
-#Adicionando os nós ao Grafo a partir do arquivo do professor.
-os.chdir('D:\\UNIFESP\\ModComp\\RedeModularizada')
 
-arestas_txt = open('network.dat','r')
-
-for line in arestas_txt:
-    linhacomp = line.split()
-    primeiro = linhacomp[0]
-    segundo  = linhacomp[1]
-    G.add_edge(primeiro, segundo)
+#TESTES
 #    print(primeiro,"HAHA",segundo)     
 #    Test +=1
 #    if(Test >= 5):
@@ -37,4 +39,18 @@ for line in arestas_txt:
 #Apresentar gráfico
 #nx.draw(G, with_labels = True)    
 #plt.draw()
-#plt.show()    
+#plt.show() 
+#FIMDETESTES 
+
+#--------------------------------------
+#Inicio da criação dos gráfos:
+#--------------------------------------
+
+
+ba = nx.barabasi_albert_graph(500, 2)
+
+
+plt.figure(1,figsize=(24,24)) 
+nx.draw(ba,node_size=60)
+plt.show()        
+    
