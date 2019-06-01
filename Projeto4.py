@@ -53,7 +53,7 @@ else:
 #FIMDETESTES 
 
 #--------------------------------------
-# Criação da matiz de adjacencia randomica (peso das arestas) e array randomico (peso dos nós)
+# Criação da matriz de adjacencia randomica (peso das arestas) e array randomico (peso dos nós)
 #--------------------------------------
 
 L= nx.to_numpy_matrix(G)# gera matriz de adjacencia das arestas: 1= nós ligados, 0=nós desligados
@@ -68,19 +68,19 @@ S=[]#
 for i in range (0,n,1): # gera valores randomicos (de 0 a 1) para os nós. 1= máximo de resistência, 0= infectado
     value=random()
     S.append(value)
-S[0]=0 # nó 0 infectado
-S[1]=0 # nó 1 infectado
-S[2]=0 # nó 2 infectado
-# S[7]=0 # nó 7 infectado
-# S[6]=0 # nó 6 infectado
-# S[4]=0 # nó 4 infectado
+S[0]=0 # nó 0 infectado inicialmente
+S[1]=0 # nó 1 infectado inicialmente
+S[2]=0 # nó 2 infectado inicialmente
+# S[7]=0 # nó 7 infectado inicialmente
+# S[6]=0 # nó 6 infectado inicialmente
+# S[4]=0 # nó 4 infectado inicialmente
 #print('S inicial:',S)
 
 #--------------------------------------
 # cálculo de infecção, início das iterações
 #--------------------------------------
 
-for k in range (0,5,1):# calculo de contaminação, 20 iterações
+for k in range (0,5,1):# calculo de contaminação, 5 iterações
     for i in range (0,n,1):
         for j in range (0,n,1):
             if S[j]==0 and L[i,j]>0 and (random()*10*S[i]/L[i,j]<0.5):
