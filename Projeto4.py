@@ -3,12 +3,15 @@
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
+
 import pandas as pd
 from random import *
 #from decimal import *
 import os
 import sys
+
+#%matplotlib inline
+
 
 np.set_printoptions(threshold=sys.maxsize)#ver matriz sem truncamento
 
@@ -16,30 +19,42 @@ np.set_printoptions(threshold=sys.maxsize)#ver matriz sem truncamento
 #Declaração de variáveis.
 #--------------------------------------
 Test = 0 
-G = nx.Graph()
 n=1000 # número de nós 
-g=4 # grau médio de ligação 
+grau=4 # grau médio de ligação 
 
 #--------------------------------------
+
 # Escolha da rede
 #--------------------------------------
-R = input("Deseja gerar o grafo a partir de um arquivo? (S/N)")
+print('Qual topologia deseja utilizar?\n')
+print(" 'B' - Barabasi \n 'N' - regular\n 'T' - From txt \n 'E' - Erdös-Rényi \n")
+R = input('Topologia: ')
 
-if( R == 'S' or R == 's'): 
-#Adicionando os nós ao Grafo a partir do arquivo do professor.
-   #os.chdir('//storage//emulated//0')
-   os.chdir('C:\\Users\\Ellen')
-
-   arestas_txt = open('network.dat','r')
-   
-   for line in arestas_txt:
-       linhacomp = line.split()
-       primeiro = linhacomp[0]
-       segundo  = linhacomp[1]
-       G.add_edge(primeiro, segundo)
+if R == "B": #BARABASI
+    G = nx.barabasi_albert_graph(n,grau)
     
-else:
-    G = nx.barabasi_albert_graph(n,g)
+elif R == "N": #REGULAR
+    G = nx.Graph(n,grau) 
+    
+elif R == "T": #Por arquivo de Texto
+    G = nx.Graph()     
+#Adicionando os nós ao Grafo a partir do arquivo do professor.
+#os.chdir('//storage//emulated//0')
+    path = input('Digite o caminho completo (duas "//") até o arquivo ex: C://Eduardo//MODCOMP//grafos.dat')
+    os.chdir(path)
+    
+    arestas_txt = open('network.dat','r')
+   
+    for line in arestas_txt:
+        
+        linhacomp = line.split()
+        primeiro = linhacomp[0]
+        segundo  = linhacomp[1]
+        G.add_edge(primeiro, segundo)
+      
+elif R == "E":   #Erdös-Rényi;
+    nx.fast_gnp_random_graph(n,0.08,seed = 9)
+ 
 
 #TESTES
 #    print(primeiro,"HAHA",segundo)     
@@ -47,9 +62,9 @@ else:
 #    if(Test >= 5):
 #        break
 #Apresentar gráfico
-#nx.draw(G, with_labels = True)    
-#plt.draw()
-#plt.show() 
+nx.draw(G, with_labels = True)    
+plt.draw()
+plt.show() 
 #FIMDETESTES 
 
 #--------------------------------------
