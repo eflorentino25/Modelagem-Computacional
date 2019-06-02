@@ -32,7 +32,7 @@ if R == "B" or R == "b": #BARABASI
     G = nx.barabasi_albert_graph(n,grau)
     
 elif R == "N" or R == "n": #REGULAR
-    G = nx.Graph(n,grau) 
+    G = nx.cycle_graph(n) 
     
 elif R == "T" or R == "t": #Por arquivo de Texto
     G = nx.Graph()     
