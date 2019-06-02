@@ -22,7 +22,7 @@ np.set_printoptions(threshold=sys.maxsize)#ver matriz sem truncamento
 #--------------------------------------
 Test = 0 
 n=1000 # número de nós 
-grau=4 # grau médio de ligação 
+grau=2 # grau médio de ligação 
 
 #--------------------------------------
 
