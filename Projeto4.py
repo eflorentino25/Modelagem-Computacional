@@ -13,10 +13,6 @@ import sys
 #%matplotlib inline
 %matplotlib notebook
 
-
-#np.set_printoptions(5000)
-np.set_printoptions(threshold=sys.maxsize)#ver matriz sem truncamento
-
 #--------------------------------------
 #Declaração de variáveis.
 #--------------------------------------
