@@ -3,7 +3,6 @@
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
-
 import pandas as pd
 from random import *
 #from decimal import *
@@ -12,6 +11,7 @@ import sys
 
 #%matplotlib inline
 %matplotlib notebook
+
 
 #--------------------------------------
 #Declaração de variáveis.
@@ -31,7 +31,7 @@ R = input('Topologia: ')
 if R == "B" or R == "b": #BARABASI
     G = nx.barabasi_albert_graph(n,grau)
     
-elif R == "N" or R == "n": #REGULAR
+elif R == "N": #REGULAR
     G = nx.cycle_graph(n) 
     
 elif R == "T" or R == "t": #Por arquivo de Texto
@@ -53,7 +53,8 @@ elif R == "T" or R == "t": #Por arquivo de Texto
         G.add_edge(primeiro, segundo)
       
 elif R == "E" or R == "e":   #Erdös-Rényi;
-    nx.fast_gnp_random_graph(n,0.08,seed = 9)
+    G= nx.erdos_renyi_graph(n,0.002) # grau médio 2
+    #nx.fast_gnp_random_graph(n,0.08,seed = 9)
  
 
 #TESTES
