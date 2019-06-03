@@ -3,6 +3,7 @@
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
+
 import pandas as pd
 from random import *
 #from decimal import *
@@ -13,12 +14,16 @@ import sys
 %matplotlib notebook
 
 
+#np.set_printoptions(5000)
+np.set_printoptions(threshold=sys.maxsize)#ver matriz sem truncamento
+
 #--------------------------------------
 #Declaração de variáveis.
 #--------------------------------------
 Test = 0 
 n=1000 # número de nós 
 grau=2 # grau médio de ligação 
+iter=20# número de iterações
 
 #--------------------------------------
 
@@ -112,31 +117,51 @@ for node in G:
             color_map0.append('red')
         else: color_map0.append('green')
         i=i+1
-plt.figure(0,figsize=(10,10))
-nx.draw(G,pos,fixed=pos,node_size=50,node_color = color_map0,with_labels = False)
-plt.show()#plotando rede inicial
+# plt.figure(0,figsize=(10,10))
+# nx.draw(G,pos,fixed=pos,node_size=50,node_color = color_map0,with_labels = False)
+# plt.show()#plotando rede inicial
+#print("Número de infectados: ",S.count(0))# conta número de infectados: S[i]=0
 
 #--------------------------------------
 # cálculo de infecção, início das iterações
 #--------------------------------------
 
-for k in range (0,5,1):# calculo de contaminação, 5 iterações
+numero_infectados=[]
+numero_infectados.append(S.count(0))
+tempo=[]
+tempo.append('0')
+for k in range (0,iter,1):# calculo de contaminação, 20 iterações
     for i in range (0,n,1):
         for j in range (0,n,1):
             if S[j]==0 and L[i,j]>0 and (random()*10*S[i]/L[i,j]<0.5):
                     S[i]=0 
+
+    numero_infectados.append(S.count(0))
+    tempo.append(k+1)
     color_map = []
     i=0
-    for node in G:
-        if S[i]==0:
-            color_map.append('red')
-        else: color_map.append('green')
-        i=i+1
-    plt.figure(k+1,figsize=(10,10))
-    nx.draw(G,pos,fixed=pos,node_size=50,node_color = color_map,with_labels = False)
-    plt.show()#plotando rede em cada iteração
+#     for node in G:
+#         if S[i]==0:
+#             color_map.append('red')
+#         else: color_map.append('green')
+#         i=i+1
+#     if k==iter*0.2-1 or k==iter*0.4-1 or k==iter*0.6-1 or k==iter*0.8-1 or k==iter-1:
+#         plt.figure(k+1,figsize=(10,10))
+#         nx.draw(G,pos,fixed=pos,node_size=50,node_color = color_map,with_labels = False)
+#         plt.show()#plotando rede em cada iteração
+#         print("Número de infectados: ",S.count(0))# conta número de infectados: S[i]=0
     
-print("Número de infectados: ",S.count(0))# conta número de infectados: S[i]=0
+%matplotlib inline
+plt.figure(100,figsize=(15,15))
+plt.plot(tempo,numero_infectados)
+plt.grid(True)
+plt.axis([0,iter+1,0,S.count(0)+S.count(0)*0.05])
+plt.xlabel("Iterações",fontsize=16)
+plt.ylabel("Número de Infectados",fontsize=16)
+plt.title('Evolução da Contaminação',fontsize=22)
+plt.show
+    
+#print("Número de infectados: ",S.count(0))# conta número de infectados: S[i]=0
 
 
 #--------------------------------------
