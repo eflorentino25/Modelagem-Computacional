@@ -24,6 +24,7 @@ Test = 0
 n=1000 # número de nós 
 grau=2 # grau médio de ligação 
 iter=20# número de iterações
+th=0.5 # threshold do cálculo de contaminação
 
 #--------------------------------------
 
@@ -133,7 +134,7 @@ tempo.append('0')
 for k in range (0,iter,1):# calculo de contaminação, 20 iterações
     for i in range (0,n,1):
         for j in range (0,n,1):
-            if S[j]==0 and L[i,j]>0 and (random()*10*S[i]/L[i,j]<0.5):
+            if S[j]==0 and L[i,j]>0 and (random()*10*S[i]/L[i,j]<th):
                     S[i]=0 
 
     numero_infectados.append(S.count(0))
