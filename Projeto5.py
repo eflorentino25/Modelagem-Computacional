@@ -2,12 +2,12 @@ import math
 import os
 
 #-------------------------
-n = 3 #Numero de moleculas
+n = 500 #Numero de moleculas
 m = 3 #Posições em Z,X e Y
 Moleculas = [[0] * m for i in range(n)] #Criação do array para posição das moleculas
-Moleculas[0] = [1,1,1]  #Localização Moleculas 1,2,3 ou r,g,b
-Moleculas[1] = [4,5,6]
-Moleculas[2] = [1,9,9]
+Moleculas[0] = [1,1,1]  #Localização Moleculas 1,2,3 ou r,g,b , até 9
+Moleculas[1] = [4,5,6]  #até 10
+Moleculas[2] = [1,4,4]  #até 5
 #Moleculas = [r,b,g]
 Velocidades = [[0] * m for i in range(n)] #Criação do array para velocidades em X,Y,Z das moleculas
 d = []     #Vetor das diferenças entre as posições 
@@ -103,36 +103,60 @@ for time in range(1,10,1):
     All_Dir_For =    []
     
     #"Atualizando a posição das moléculas. dS = dT * dV
-    
+    #Forçando a mudança de direção Caso ultrapasse os limites da caixa
+    teste = 0
     for mol in range(n):
         for XYZ in range(m):
-            Moleculas[mol][XYZ] += Velocidades[mol][XYZ] 
+            if XYZ == 0:
+                teste = Moleculas[mol][XYZ] + Velocidades[mol][XYZ]
+                if teste > 9 or teste < 0:
+                    Velocidades[mol][XYZ] *= -1
+                Moleculas[mol][XYZ] += Velocidades[mol][XYZ]
+            elif XYZ == 1:
+                teste = Moleculas[mol][XYZ] + Velocidades[mol][XYZ]
+                if teste > 10 or teste < 0:
+                    Velocidades[mol][XYZ] *= -1
+                Moleculas[mol][XYZ] += Velocidades[mol][XYZ]                
+            elif XYZ == 2:
+                teste = Moleculas[mol][XYZ] + Velocidades[mol][XYZ]
+                if teste > 5 or teste < 0:
+                    Velocidades[mol][XYZ] *= -1
+                Moleculas[mol][XYZ] += Velocidades[mol][XYZ]             
     
-    print(time,":\n",Moleculas,"\n")
+#    print(time,":\n",Moleculas,"\n")
     
-    
-    
-
-
-
-               
 
 #******************
 #Abrir arquivos e gravar 500 posições X n iterações.
 #******************
-#    os.chdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov")     
-#    c = filename + str(time)    
-#    print (c)
-#    file = open(c,'w')
-#    file.write(str(Resultantes)+"\n")
-#    file.close()
+#   os.chdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov")     
+#   c = filename + str(time)    
+#   print (c)
+#   file = open(c,'w')
+#   file.write(str(Resultantes)+"\n")
+#   file.close()
         
+    
     
 
 
 
-#A Criar:
 
-#    Método de Euler -> Integração
-#    Deslocamento
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
