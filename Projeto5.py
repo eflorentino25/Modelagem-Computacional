@@ -1,100 +1,138 @@
 import math
-
+import os
 
 #-------------------------
-r = [1,1,1]
-b = [4,5,6]
-g = [1,9,9]
-Moleculas = [r,b,g]
-r = [0,0,0]
-Resultantes = []
+n = 3 #Numero de moleculas
+m = 3 #Posições em Z,X e Y
+Moleculas = [[0] * m for i in range(n)] #Criação do array para posição das moleculas
+Moleculas[0] = [1,1,1]  #Localização Moleculas 1,2,3 ou r,g,b
+Moleculas[1] = [4,5,6]
+Moleculas[2] = [1,9,9]
+#Moleculas = [r,b,g]
+Velocidades = [[0] * m for i in range(n)] #Criação do array para velocidades em X,Y,Z das moleculas
+d = []     #Vetor das diferenças entre as posições 
 Vet_un = []
-All_Vet_un = [0,0,0]
+All_Vet_un = []
+Dir_For = []
+Velocidade_ind = []
+
+for i in range(0,m):
+    d.append(0)
+    Vet_un.append(0)
+    All_Vet_un.append(0)
+    Dir_For.append(0)
+    Velocidade_ind.append(0)   
+#Vet_un    = [0,0,0]
+#All_Vet_un = [0,0,0]
+#Dir_For = [0,0,0]
+#Velocidade_ind = [0,0,0]
+Resultantes = []
 Result_Vet_un = []
-X  = 0
-Y  = 0
-Z  = 0 
-Dir_For = [0,0,0]
 All_Dir_For = []
-Velocidade_ind = [0,0,0]
-All_Velocidade = []
+
 #-------------------------
- #Constantes:
- 
- 
+# Constantes:
  
 M = 0.000039948
 U_0 = 1 
 R_0 = 1
-
+filename = "Mol"
 
 F = 0
 Dist_real = 0
  
-for time in range(0,100000,1): 
-
-for a in Moleculas: 
-    for y in Moleculas:
-        if y != a:
-            r[0] = a[0] - y[0]
-            r[1] = a[1] - y[1]
-            r[2] = a[2] - y[2]
-            Dist_real = math.pow(r[0],2) + r[1]*r[1]+ r[2]*r[2]
-            Vet_un[0] = r[0]/Dist_real
-            Vet_un[1] = r[1]/Dist_real
-            Vet_un[2] = r[2]/Dist_real
-            X = X + Vet_un[0]
-            Y = Y + Vet_un[1]
-            Z = Z + Vet_un[2]
-#            print(Dist_real,r)
-            Dist_real = math.sqrt(Dist_real)
-            F = F + 12 *(math.pow((1/Dist_real),13) - math.pow((1/Dist_real),7))
+for time in range(1,10,1): 
+    for a in Moleculas: 
+        for y in Moleculas:
+            if y != a:
+                for position in range(m): 
+                    d[position] = a[position] - y[position]
+              
+                for position in range(m):
+                    Dist_real += math.pow(d[position],2)
+                Dist_real = math.sqrt(Dist_real)
+#                Dist_real = math.pow(d[0],2) + d[1]*d[1]+ d[2]*d[2]
+           
+                for position in range(m): 
+                    Vet_un[position] += d[position]/Dist_real
+#                Vet_un[0] = d[0]/Dist_real
+#                Vet_un[1] = d[1]/Dist_real
+#                Vet_un[2] = d[2]/Dist_real                    
+#                X = X + Vet_un[0]
+#                Y = Y + Vet_un[1]
+#                Z = Z + Vet_un[2]
+                F = F + 12 *(math.pow((1/Dist_real),13) - math.pow((1/Dist_real),7))
+		#Loop Y
+        Result_Vet_un.append(Vet_un)
+        Resultantes.append(F)
+        F = 0
+	#Loop a molecula	
+        
+	
+	
+#    print("\n",time,":",Resultantes)
+    
+#    print("\n Resultantes:\n",Result_Vet_un,"\n","Forças:",Resultantes,"\n",Dir_For)
+    for laco1 in range(n):
+        for laco2 in range(m):
+#            print(Dir_For[laco2],"em>",laco2, Result_Vet_un[laco1][laco2],"em>",laco1,laco2,  Resultantes[laco1],"em>",laco1)
+            Dir_For[laco2] = Result_Vet_un[laco1][laco2] * Resultantes[laco1]
+#            print(Dir_For[laco2] )
+        All_Dir_For.append(Dir_For)
+        
+# Zerar Resultantes intermediarios para não ocupar memória.
+    Result_Vet_un = []    
+    Resultantes = []  
+    
+#    All_Dir_For = []
+#    Dir_For = []   
+#    for i in range(0,m):
+#        Dir_For.append(0)
+              
+        
+#Cálculos acima são para Medir aceleração
+    #"Atualizando a velocidade:
+    for speed in range(n):
+        for laco1 in range(m):
+            Velocidades[speed][laco1] += All_Dir_For[speed][laco1]
             
-    Resultantes.append(F)
-    All_Vet_un[0] = X
-    All_Vet_un[1] = Y
-    All_Vet_un[2] = Z
-    Result_Vet_un.append(All_Vet_un)
-    F = 0
-    X = Y = Z = 0
+#    print(Velocidades)
 
-print(Resultantes)
+    
+# Zerar Resultantes intermediarios para não ocupar memória.
+    All_Dir_For =    []
+    
+    #"Atualizando a posição das moléculas. dS = dT * dV
+    
+    for mol in range(n):
+        for XYZ in range(m):
+            Moleculas[mol][XYZ] += Velocidades[mol][XYZ] 
+    
+    print(time,":\n",Moleculas,"\n")
+    
+    
+    
 
 
 
-for r in range(0,len(Result_Vet_un)):
-    for i in range(0,2):
-        Dir_For[i] = Result_Vet_un[r][i] * Resultantes[r]
-    All_Dir_For.append(Dir_For)
+               
 
+#******************
+#Abrir arquivos e gravar 500 posições X n iterações.
+#******************
+#    os.chdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov")     
+#    c = filename + str(time)    
+#    print (c)
+#    file = open(c,'w')
+#    file.write(str(Resultantes)+"\n")
+#    file.close()
+        
+    
 
-#Calculos acima são para Medir aceleração
 
 
 #A Criar:
-#    
+
 #    Método de Euler -> Integração
 #    Deslocamento
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
