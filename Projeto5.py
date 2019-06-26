@@ -2,7 +2,7 @@ import math
 import os
 
 #-------------------------
-n = 500 #Numero de moleculas
+n = 5 #Numero de moleculas
 m = 3 #Posições em Z,X e Y
 Moleculas = [[0] * m for i in range(n)] #Criação do array para posição das moleculas
 Moleculas[0] = [1,1,1]  #Localização Moleculas 1,2,3 ou r,g,b , até 9
@@ -41,7 +41,7 @@ filename = "Mol"
 F = 0
 Dist_real = 0
  
-for time in range(1,10,1): 
+for time in range(1,1000,1): 
     for a in Moleculas: 
         for y in Moleculas:
             if y != a:
@@ -141,25 +141,7 @@ for filename in os.listdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov"):
     contents = file.read()
     file_final.write(str(contents))
     file.close()
+    os.remove(filename)
+file_final.close()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
  
