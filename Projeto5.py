@@ -125,19 +125,22 @@ for time in range(1,10,1):
     
 #    print(time,":\n",Moleculas,"\n")
     
-
 #******************
 #Abrir arquivos e gravar 500 posições X n iterações.
 #******************
-#   os.chdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov")     
-#   c = filename + str(time)    
-#   print (c)
-#   file = open(c,'w')
-#   file.write(str(Resultantes)+"\n")
-#   file.close()
+    os.chdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov")     
+    c = filename + str(time)    
+#    print (c)
+    file = open(c,'w')
+    file.write(str(Moleculas)+"\n")
+    file.close()
         
-    
-    
+file_final = open("Movimentos_total.txt",'w')
+for filename in os.listdir("D:\\UNIFESP\\ModComp\\Projeto5\\Arq_Mov"):
+    file = open(filename,'r')
+    contents = file.read()
+    file_final.write(str(contents))
+    file.close()
 
 
 
