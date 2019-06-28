@@ -1,0 +1,60 @@
+clf% limpa gráfico
+mov = VideoWriter('animaçaoMov29.mp4','MPEG-4');%cria arquivo para video
+mov.FrameRate = 10;% = rep dividido por tempo de duração do video
+mov.Quality = 95;
+open(mov)% inicia gravacao de video
+
+%arquivo=fopen('novoposicoes.txt')%abre txt
+arquivo=fopen('Movimentos_totais (3).txt')%abre txt
+v = fscanf(arquivo,'%f');%cria array v com os valores de txt
+fclose(arquivo);% fecha txt
+size(v); 
+
+
+arquivo=fopen('EnergiaCinetica.txt')%abre txt
+v2 = fscanf(arquivo,'%f');%cria array v com os valores de txt
+fclose(arquivo);% fecha txt
+n2= length(v2) %numero de valores de energia cinetica
+M2=max(v2)+0.1*max(v2);
+
+   
+
+n=500 ;% n: número de moléculas ALTERAR PARA VALOR DESEJADO
+rep=99;%número de vezes as molec irão se movimentar ALTERAR PARA VALOR DESEJADO
+
+
+k=0;% indice para array v
+t=0;
+for j=1:1:rep  %looping pra número de vezes as molec irão se movimentar
+     figure(j);
+     for i=1:1:n % looping para nova posicao de cada molec 
+
+        k=k+1;
+        x=v(k)
+        k=k+1;
+        y=v(k)
+        k=k+1;
+        z=v(k)
+        %scatter3(x,y,z,'r','filled')% projeta coord no grafico
+        scatter3(x,y,z,'filled');% projeta coord no grafico
+        hold on;
+        axis on %mostrar eixos
+        axis([-0 40 -0 40 -0 40])%limitacao dos eixos x,y,z
+     end
+
+     axes('Position',[.82 .8 .15 .15])
+     box on
+     t=t+1
+     bar(v2(t));
+     set(gca, 'XTickLabel', {});
+     xlabel('Energia cinética');
+     axis on %mostrar eixos;
+     axis([-0 2 -M2*0.1 M2])%limitacao dos eixos x,y,z  
+     box 
+     
+     F=getframe(j);% salva posicao de todos os pontos em uma imagem F
+     writeVideo(mov,F);% salva F no arquivo de vídeo
+     clf% limpa grafico para não deixar "rastros"
+end
+close(mov);% finaliza gravacao de video
+movie(F)% 
